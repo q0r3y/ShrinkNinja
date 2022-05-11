@@ -11,12 +11,7 @@ function resFormat(res, msg, fs) {
     'text/html': function () {
       res.send(`
             <!DOCTYPE html>
-            <script>function c(e) {
-              navigator.clipboard.writeText(e.innerText)
-              .then(()=>{console.log('Copied');})
-              .catch(()=>{console.log('Not copied');})
-              ;
-            }
+            <script>function c(e) {navigator.clipboard.writeText(e.innerText);}
             </script><body style="background:black;">
             <p onclick="c(this)" style="font-size:${fs};color:white;text-align:center;
             word-break:break-all;margin:40vh 5vw 40vh 5vw;">${msg}</p>
