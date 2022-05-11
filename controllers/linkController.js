@@ -1,6 +1,44 @@
 'use strict';
-const SHORT_URL = `nin.sh`;
+const SHORT_URL = 'nin.sh';
 const Link = require('../models/Link');
+const validUrl = require('valid-url');
+const resController = require('./resController');
+
+async function unpackShortUrl(req, res) {
+  let pathData = req.originalUrl.slice(1);
+  let ninEnd = pathData.indexOf(`nin.sh`) + 7;
+  let shortCode = pathData.slice(ninEnd, ninEnd + 5);
+  let link = await getLink(escape(shortCode));
+  if (link) {
+    resController.resFormat(res, link['longUrl']);
+  } else {
+    resController.resFormat(res,
+      `The first priority to the ninja is to win without fighting.`);
+  }
+}
+
+function sendShortLink() {
+  return (req, res) => {
+    let msg = res.locals['generatedLink']['shortUrl'];
+    resController.resFormat(res, msg, '5em');
+  }
+}
+
+function checkPathForUrl() {
+  return async (req, res, next) => {
+    let pathData = req.originalUrl.slice(1);
+    if (pathData.substring(0,14).includes(`nin.sh`)) {
+      await unpackShortUrl(req, res);
+    }
+    else if (validUrl.isWebUri(pathData)) {
+      res.locals['longUrl'] = pathData;
+      next();
+    } else {
+      resController.resFormat(res, // Could return a usage page
+        `Man… ninjas are kind of cool… I just don’t know any personally.`);
+    }
+  };
+}
 
 function generateLink() {
   return async (req, res, next) => {
@@ -21,32 +59,22 @@ function generateLink() {
               next();
             })
             .catch((err) => {
-              handleError(err, res);
+              resController.resError(err, res);
             });
         })
         .catch((err) => {
-          handleError(err, res);
+          resController.resError(err, res);
         });
     } catch (err) {
-      handleError(err, res);
+      resController.resError(err, res);
     }
   }
-}
-
-function handleError(err, res) {
-  console.log(`[-] Error: `);
-  console.log(err);
-  res.status(409).json({
-    status: 'failed',
-    error: `Unable to process your request, try again later.`
-  });
 }
 
 async function generateShortCode() {
   let attempt = 1;
   let shortCode = Math.random().toString(36).substr(2, 5);
   while (await isCodeInUse(shortCode)) {
-    console.log(`[*] Found duplicate path. Generating new code...`);
     shortCode = Math.random().toString(36).substr(2, 5);
     attempt++;
     if (attempt >= 10)
@@ -64,4 +92,4 @@ async function getLink(shortCode) {
   return await Link.findOne({'shortCode': shortCode}).exec();
 }
 
-module.exports = {generateLink, getLink};
+module.exports = {generateLink, getLink, checkPathForUrl, sendShortLink};
