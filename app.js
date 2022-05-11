@@ -4,15 +4,22 @@ const vhost = require('vhost');
 const express = require("express");
 const mongoose = require("mongoose");
 const rateLimit = require('express-rate-limit');
+const taskController = require('./controllers/taskController');
 
 async function run() {
     await dbConnect();
     initExpress();
+    await startTasks();
+}
+
+async function startTasks() {
+    console.log(`[*] Starting tasks..`);
+    await taskController.clearExpiredLinks();
 }
 
 async function dbConnect() {
     console.log(`[*] Connecting to mongoDB..`);
-    //mongoose.set('debug', true);
+    mongoose.set('debug', true);
     await mongoose.connect(
         process.env.MONGO_DB_CONNECTION,
         {
