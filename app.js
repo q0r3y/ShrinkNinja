@@ -49,10 +49,10 @@ function initExpress() {
         legacyHeaders: false,
     })
 
+    app.set('trust proxy', 2) // Number of proxies
     app.use(limiter);
     app.use(express.json());
-
-    app.set('trust proxy', 1) // Number of proxies
+    
     app.get('/ip', (request, response) => response.send(request.ip))
 
     app.use(vhost('nin.sh', expandApp));
