@@ -52,7 +52,7 @@ function initExpress() {
     app.use(limiter);
     app.use(express.json());
 
-    //app.set('trust proxy', 1) // Number of proxies
+    app.set('trust proxy', 1) // Number of proxies
     app.get('/ip', (request, response) => response.send(request.ip))
 
     app.use(vhost('nin.sh', expandApp));
