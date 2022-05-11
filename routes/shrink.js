@@ -43,7 +43,18 @@ async function unpackShortUrl(req, res) {
       }
     });
   } else {
-    res.send(`The first priority to the ninja is to win without fighting.`);
+    let msg = `The first priority to the ninja is to win without fighting.`;
+    res.format({
+      'text/html': function () {
+        res.send(`
+            <body style="background:black;">
+            <p style="font-size:2em;color:white;text-align:center;
+            padding-bottom:40vh;padding-top:40vh; margin:auto">
+            ${msg}<p>
+            </body>
+        `);
+      }
+    });
   }
 }
 
@@ -58,7 +69,18 @@ function checkPathForUrl() {
       next();
     } else {
       // Could return a usage page
-      return res.send(`Man… ninjas are kind of cool… I just don’t know any personally.`);
+      let msg = `Man… ninjas are kind of cool… I just don’t know any personally.`;
+      res.format({
+        'text/html': function () {
+          res.send(`
+            <body style="background:black;">
+            <p style="font-size:2em;color:white;text-align:center;
+            padding-bottom:40vh;padding-top:40vh; margin:auto">
+            ${msg}<p>
+            </body>
+        `);
+        }
+      });
     }
   };
 }
