@@ -56,16 +56,6 @@ function initExpress() {
         legacyHeaders: false,
     });
 
-    // Needed for Heroku HTTPS redirect
-    if(process.env.NODE_ENV === 'production') {
-        app.use((req, res, next) => {
-            if (req.header('x-forwarded-proto') !== 'https')
-                res.redirect(`https://${req.header('host')}${req.url}`)
-            else
-                next()
-        })
-    }
-
     // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
     app.set('trust proxy', 2)
     app.use(limiter);
