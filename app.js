@@ -19,7 +19,7 @@ async function startTasks() {
 
 async function dbConnect() {
     console.log(`[*] Connecting to mongoDB..`);
-    mongoose.set('debug', true);
+    //mongoose.set('debug', true);
     await mongoose.connect(
         process.env.MONGO_DB_CONNECTION,
         {
@@ -59,6 +59,7 @@ function initExpress() {
     // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
     app.set('trust proxy', 2)
     app.use(limiter);
+
     app.use(express.json());
 
     app.use(vhost('nin.sh', expandApp));

@@ -1,8 +1,8 @@
 'use strict';
 
-function resFormat(res, msg, fontSize) {
-  if (!fontSize) {
-    fontSize = `2em`;
+function resFormat(res, msg, fs) {
+  if (!fs) {
+    fs = `2em`;
   }
   res.format({
     'text/plain': function () { // For curl usage
@@ -11,9 +11,9 @@ function resFormat(res, msg, fontSize) {
     'text/html': function () {
       res.send(`
             <body style="background:black;">
-            <p style="font-size:${fontSize};color:white;text-align:center;
-            padding-bottom:40vh;padding-top:40vh; margin:auto">
-            ${msg}<p>
+            <p style="font-size:${fs};color:white;text-align:center;
+            word-break:break-all;padding:40vh 5vw 40vh 5vw; 
+            margin:auto">${msg}<p>
             </body>
         `);
     }

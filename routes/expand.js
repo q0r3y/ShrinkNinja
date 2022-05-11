@@ -10,7 +10,7 @@ router.all('*',
     if (link) {
       res.redirect(link['longUrl']);
     } else {
-      res.redirect(`http://shrink.ninja`);
+      res.redirect(`https://shrink.ninja`);
     }
   }
 );
