@@ -1,0 +1,20 @@
+{
+  "name": "shrinkninja",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "q0r3y",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.5",
+    "nodemon": "^2.0.16",
+    "valid-url": "^1.0.9",
+    "vhost": "^3.0.2"
+  }
+}
