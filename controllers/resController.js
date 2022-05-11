@@ -10,10 +10,13 @@ function resFormat(res, msg, fs) {
     },
     'text/html': function () {
       res.send(`
+            <!DOCTYPE html>
+            <script>function c(e) {console.log(e.innerText);
+             navigator.clipboard.writeText(e.innerText);}</script>
             <body style="background:black;">
-            <p style="font-size:${fs};color:white;text-align:center;
+            <p onclick="c(this)" style="font-size:${fs};color:white;text-align:center;
             word-break:break-all;padding:40vh 5vw 40vh 5vw; 
-            margin:auto">${msg}<p>
+            margin:auto">${msg}</p>
             </body>
         `);
     }
