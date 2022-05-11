@@ -3,6 +3,7 @@ require('dotenv').config();
 const vhost = require('vhost');
 const express = require("express");
 const mongoose = require("mongoose");
+const rateLimit = require('express-rate-limit');
 
 async function run() {
     await dbConnect();
@@ -37,7 +38,22 @@ function initExpress() {
     shrinkApp.use('/', shrinkRoutes);
     expandApp.use('/', expandRoutes);
 
+    const limiter = rateLimit({
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: 50, // Number of requests
+        message: {
+            "err" : "You've hit the rate limit. Try again later.",
+            "msg" : "To lose patience is to lose the battle."
+        },
+        standardHeaders: true,
+        legacyHeaders: false,
+    })
+
+    app.use(limiter);
     app.use(express.json());
+
+    //app.set('trust proxy', 1) // Number of proxies
+    app.get('/ip', (request, response) => response.send(request.ip))
 
     app.use(vhost('nin.sh', expandApp));
     app.use(vhost('shrink.ninja', shrinkApp));
