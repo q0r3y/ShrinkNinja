@@ -49,11 +49,10 @@ function initExpress() {
         legacyHeaders: false,
     })
 
-    app.set('trust proxy', 2) // Number of proxies
+    // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
+    app.set('trust proxy', 2)
     app.use(limiter);
     app.use(express.json());
-    
-    app.get('/ip', (request, response) => response.send(request.ip))
 
     app.use(vhost('nin.sh', expandApp));
     app.use(vhost('shrink.ninja', shrinkApp));
