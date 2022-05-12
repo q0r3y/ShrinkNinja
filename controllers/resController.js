@@ -32,6 +32,7 @@ function resFormat(res, msg) {
             font-size:3em;
             overflow: scroll;
             overflow-x: hidden;
+            overflow-y: auto;
             filter: invert(100%);
             text-align:center;
             word-break:break-all;
@@ -61,7 +62,7 @@ function resFormat(res, msg) {
         </style>
         <script>
           function copy(e) {
-            //navigator.clipboard.writeText(e.innerText);
+            navigator.clipboard.writeText(e.innerText);
             let $copy=document.getElementById('copy');
             let $link=document.getElementById('link');
             console.log($link.filter);
