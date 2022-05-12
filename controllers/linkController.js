@@ -26,9 +26,6 @@ function sendShortLink() {
 
 function checkPathForUrl() {
   return async (req, res, next) => {
-
-    console.log(req);
-
     let pathData = req.originalUrl.slice(1);
     if (pathData.substring(0,14).includes(`nin.sh`)) {
       await unpackShortUrl(req, res);
