@@ -20,7 +20,7 @@ async function unpackShortUrl(req, res) {
 function sendShortLink() {
   return (req, res) => {
     let msg = res.locals['generatedLink']['shortUrl'];
-    resController.resFormat(res, msg, '6em');
+    resController.resFormat(res, msg);
   }
 }
 
