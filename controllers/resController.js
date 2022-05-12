@@ -2,7 +2,7 @@
 
 function resFormat(res, msg, fs) {
   if (!fs) {
-    fs = `3em`;
+    fs = `2em`;
   }
   res.format({
     'text/plain': function () { // For curl usage
@@ -17,9 +17,11 @@ function resFormat(res, msg, fs) {
             function c(e) {navigator.clipboard.writeText(e.innerText);
             let f=document.getElementById('a');f.style.color='white';
             let n=f.cloneNode(true);f.parentNode.replaceChild(n,f);
-            n.classList.add('a');}</script><body style="background:black;">
-            <p onclick="c(this)" class="l" style="font-size:${fs};color:white;text-align:center;
-            word-break:break-all;margin:40vh 5vw 5vh 5vw;">${msg}</p>
+            n.classList.add('a');}</script><body style="background:black;margin:0;
+            height:100vh;display:flex;align-items:center;justify-content:center;
+            flex-direction: column;"><p onclick="c(this)" class="l" 
+            style="font-size:${fs};color:white;text-align:center;
+            word-break:break-all;max-width:75%;">${msg}</p>
             <p id="a" style="color:black;text-align:center;">Copied</p>
             </body>
         `);
