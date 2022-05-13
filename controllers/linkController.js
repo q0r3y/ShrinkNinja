@@ -5,10 +5,10 @@ const validUrl = require('valid-url');
 const resController = require('./resController');
 
 async function unpackShortUrl(req, res) {
-  let pathData = req.originalUrl.slice(1);
-  let ninEnd = pathData.indexOf(`nin.sh`) + 7;
-  let shortCode = pathData.slice(ninEnd, ninEnd + 5);
-  let link = await getLink(escape(shortCode));
+  const pathData = req.originalUrl.slice(1);
+  const ninEnd = pathData.indexOf(`nin.sh`) + 7;
+  const shortCode = pathData.slice(ninEnd, ninEnd + 5);
+  const link = await getLink(escape(shortCode));
   if (link) {
     resController.resFormat(res, link['longUrl']);
   } else {
@@ -19,14 +19,14 @@ async function unpackShortUrl(req, res) {
 
 function sendShortLink() {
   return (req, res) => {
-    let msg = res.locals['generatedLink']['shortUrl'];
+    const msg = res.locals['generatedLink']['shortUrl'];
     resController.resFormat(res, msg);
   }
 }
 
 function checkPathForUrl() {
   return async (req, res, next) => {
-    let pathData = req.originalUrl.slice(1);
+    const pathData = req.originalUrl.slice(1);
     if (pathData.substring(0,14).includes(`nin.sh`)) {
       await unpackShortUrl(req, res);
     }
@@ -84,7 +84,7 @@ async function generateShortCode() {
 }
 
 async function isCodeInUse(shortCode) {
-  let link = await getLink(shortCode);
+  const link = await getLink(shortCode);
   return !!link;
 }
 

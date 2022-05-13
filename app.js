@@ -9,12 +9,12 @@ const taskController = require('./controllers/taskController');
 async function run() {
     await dbConnect();
     initExpress();
-    await startTasks();
+    //startTasks();
 }
 
-async function startTasks() {
-    console.log(`[*] Starting tasks..`);
-    await taskController.clearExpiredLinks();
+function startTasks() {
+    console.log(`[*] Initiating cron jobs..`);
+    taskController.clearExpiredLinks();
 }
 
 async function dbConnect() {
@@ -49,7 +49,6 @@ function initExpress() {
         windowMs: 15 * 60 * 1000, // 15 minutes
         max: 50, // Number of requests
         message: {
-            "err" : "You've hit the rate limit. Try again later.",
             "msg" : "To lose patience is to lose the battle."
         },
         standardHeaders: true,
