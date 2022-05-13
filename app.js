@@ -4,17 +4,10 @@ const vhost = require('vhost');
 const express = require("express");
 const mongoose = require("mongoose");
 const rateLimit = require('express-rate-limit');
-const taskController = require('./controllers/taskController');
 
 async function run() {
     await dbConnect();
     initExpress();
-    //startTasks();
-}
-
-function startTasks() {
-    console.log(`[*] Initiating cron jobs..`);
-    taskController.clearExpiredLinks();
 }
 
 async function dbConnect() {
