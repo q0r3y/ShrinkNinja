@@ -2,7 +2,7 @@
 
 function resFormat(res, msg) {
   res.format({
-    'text/plain': function () { // For curl usage
+    'text/plain': function () {
       res.send(msg);
     },
     'text/html': function () {

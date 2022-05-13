@@ -78,7 +78,7 @@ async function generateShortCode() {
     shortCode = Math.random().toString(36).substr(2, 5);
     attempt++;
     if (attempt >= 10)
-      throw `Number of short codes available is extremely low`;
+      throw `It's not over when you lose, it's over when you give up`;
   }
   return shortCode;
 }
