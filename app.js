@@ -2,30 +2,12 @@
 require('dotenv').config();
 const vhost = require('vhost');
 const express = require("express");
-const mongoose = require("mongoose");
+const database = require('./models/database');
 const rateLimit = require('express-rate-limit');
 
 async function run() {
-    await dbConnect();
+    await database.connect();
     initExpress();
-}
-
-async function dbConnect() {
-    console.log(`[*] Connecting to mongoDB..`);
-    //mongoose.set('debug', true);
-    await mongoose.connect(
-        process.env.MONGO_DB_CONNECTION,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-        .then(() => {
-            console.log(`[+] Database Connected.`);
-        })
-        .catch((err) => {
-            console.log(`[-] Unable to connect to database.`);
-            console.log(err);
-        });
 }
 
 function initExpress() {

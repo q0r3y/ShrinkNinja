@@ -1,11 +1,30 @@
 const Link = require("../models/Link");
-const today = Date.now();
-console.log(`[*] Worker.js: Ran scheduled task at ${today}`);
-Link.deleteMany({ expirationDate: { $lte: today } })
-  .then(function(){
-    console.log('[+] Worker.js: Cleared old entries');
-  })
-  .catch(function(error){
-    console.log('[-] Worker.js: Error running scheduled task:');
-    console.log(error);
-  });
+const mongoose = require("mongoose");
+const database = require('../models/database');
+
+async function main() {
+  await clearOldEntries();
+}
+
+async function clearOldEntries() {
+  await database.connect()
+    .then(() => {
+      const today = Date.now();
+      console.log(`[*] Worker.js: Ran scheduled task at ${today}`);
+      Link.deleteMany({expirationDate: {$lte: today}})
+        .then(async function () {
+          console.log('[+] Worker.js: Cleared old entries');
+          await database.disconnect();
+        })
+        .catch(async function (error) {
+          console.log('[-] Worker.js: Error running scheduled task:');
+          console.log(error);
+          await database.disconnect();
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+main();
