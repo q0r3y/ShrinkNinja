@@ -1,5 +1,4 @@
 const Link = require("../models/Link");
-const mongoose = require("mongoose");
 const database = require('../models/database');
 
 async function main() {
