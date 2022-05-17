@@ -87,7 +87,8 @@ function buildResponsePage(msg) {
     </style>
     <script>
       function copy(e) {
-        navigator.clipboard.writeText(e.innerText);
+        const shortLink = 'https://'+e.innerText;
+        navigator.clipboard.writeText(shortLink);
         const $copy=document.getElementById('copy');
         $copy.style.filter='invert(100%)';
         const $clone=$copy.cloneNode(true);
