@@ -87,7 +87,9 @@ const webpage =
     </style>
     <script>
       function copy(e) {
-        const shortLink = 'https://'+e.innerText;
+        let shortLink = e.innerText;
+        if (e.innerText.length > 12)
+            shortLink = 'https://'+e.innerText;
         navigator.clipboard.writeText(shortLink);
         const $copy=document.getElementById('copy');
         $copy.style.filter='invert(100%)';
