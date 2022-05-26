@@ -10,31 +10,28 @@ async function unpackShortUrl(req, res) {
   const shortCode = pathData.slice(ninEnd, ninEnd + 5);
   const link = await getLink(escape(shortCode));
   if (link) {
-    resController.resFormat(res, link['longUrl']);
+    resController.format(res, link['longUrl']);
   } else {
-    resController.resFormat(res,
+    resController.format(res,
       `The first priority to the ninja is to win without fighting.`);
   }
 }
 
-function sendShortLink() {
-  return (req, res) => {
-    const msg = res.locals['generatedLink']['shortUrl'];
-    resController.resFormat(res, msg);
-  }
-}
-
-function checkPathForUrl() {
+function checkForLongUrl() {
   return async (req, res, next) => {
-    const pathData = req.originalUrl.slice(1);
-    if (pathData.substring(0,14).includes(`nin.sh`)) {
+    console.log(`checking`)
+    const reqData = req.body['longUrl'];
+    if (reqData.substring(0,14).includes(`nin.sh`)) {
+      console.log(`is nin.sh`)
       await unpackShortUrl(req, res);
     }
-    else if (validUrl.isWebUri(pathData)) {
-      res.locals['longUrl'] = pathData;
+    else if (validUrl.isWebUri(reqData)) {
+      res.locals['longUrl'] = reqData;
+      console.log(`Is valid URI`);
       next();
     } else {
-      resController.resFormat(res, // Could return a usage page
+      console.log(`Nothing`)
+      resController.format(res, // Could return a usage page
         `Man… ninjas are kind of cool… I just don’t know any personally.`);
     }
   };
@@ -59,14 +56,14 @@ function generateLink() {
               next();
             })
             .catch((err) => {
-              resController.resError(err, res);
+              resController.error(err, res);
             });
         })
         .catch((err) => {
-          resController.resError(err, res);
+          resController.error(err, res);
         });
     } catch (err) {
-      resController.resError(err, res);
+      resController.error(err, res);
     }
   }
 }
@@ -92,4 +89,4 @@ async function getLink(shortCode) {
   return await Link.findOne({'shortCode': shortCode}).exec();
 }
 
-module.exports = {generateLink, getLink, checkPathForUrl, sendShortLink};
+module.exports = {generateLink, getLink, checkForLongUrl};
