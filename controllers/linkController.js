@@ -5,34 +5,28 @@ const validUrl = require('valid-url');
 const resController = require('./resController');
 
 async function unpackShortUrl(req, res) {
-  const pathData = req.originalUrl.slice(1);
-  const ninEnd = pathData.indexOf(`nin.sh`) + 7;
-  const shortCode = pathData.slice(ninEnd, ninEnd + 5);
+  const reqData = req.body['paramUrl'];
+  const ninEnd = reqData.indexOf(`nin.sh`) + 7;
+  const shortCode = reqData.slice(ninEnd, ninEnd + 5);
   const link = await getLink(escape(shortCode));
   if (link) {
-    resController.format(res, link['longUrl']);
+    res.json({'longUrl':link['longUrl']});
   } else {
-    resController.format(res,
-      `The first priority to the ninja is to win without fighting.`);
+    res.json({'error':'The first priority to the ninja is to win without fighting.'});
   }
 }
 
 function checkForLongUrl() {
   return async (req, res, next) => {
-    console.log(`checking`)
-    const reqData = req.body['longUrl'];
+    const reqData = req.body['paramUrl'];
     if (reqData.substring(0,14).includes(`nin.sh`)) {
-      console.log(`is nin.sh`)
       await unpackShortUrl(req, res);
     }
     else if (validUrl.isWebUri(reqData)) {
       res.locals['longUrl'] = reqData;
-      console.log(`Is valid URI`);
       next();
     } else {
-      console.log(`Nothing`)
-      resController.format(res, // Could return a usage page
-        `Man… ninjas are kind of cool… I just don’t know any personally.`);
+      res.json({'error':'Man… ninjas are kind of cool… I just don’t know any personally.'});
     }
   };
 }
