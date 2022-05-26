@@ -1,11 +1,9 @@
 'use strict';
 
-function error(err, res) {
-  console.log(`[-] Error: `);
-  console.log(err);
-  res.status(409).json({
-    status: 'err',
-    error: `Only a ninja can stop a ninja.`
+function error(res, code, error) {
+  res.status(code).json({
+    status: 'error',
+    error: error || `Only a ninja can stop a ninja.`
   });
 }
 
@@ -18,7 +16,12 @@ function sendShortLink() {
 
 function sendWebPage() {
   return (req, res) => {
-    res.send(`
+    res.send(webpage);
+  }
+}
+
+const webpage =
+  `
     <!DOCTYPE html>
     <head>
     <title>ShrinkNinja</title>
@@ -126,7 +129,7 @@ function sendWebPage() {
           const longUrlJson = JSON.stringify({ 'paramUrl' : paramUrl });
           const newShortLink = await fetch('/shrink', {
             method: 'POST', body: longUrlJson,
-            headers: {'Accept': 'application/json','Content-Type': 'application/json'},
+            headers: {'Accept': 'application/json','Content-Type': 'application/json'}
           });
           newShortLink.json().then((data) => {
             $linkText.innerText = data.error || data.shortUrl || data.longUrl;
@@ -162,9 +165,5 @@ function sendWebPage() {
       </svg>
     </body>
   `
-    )
-  }
-
-}
 
 module.exports = { error, sendWebPage, sendShortLink}

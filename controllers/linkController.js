@@ -12,7 +12,8 @@ async function unpackShortUrl(req, res) {
   if (link) {
     res.json({'longUrl':link['longUrl']});
   } else {
-    res.json({'error':'The first priority to the ninja is to win without fighting.'});
+    const msg = `The first priority to the ninja is to win without fighting.`;
+    resController.error(res, 404, msg);
   }
 }
 
@@ -26,7 +27,8 @@ function checkForLongUrl() {
       res.locals['longUrl'] = reqData;
       next();
     } else {
-      res.json({'error':'Man… ninjas are kind of cool… I just don’t know any personally.'});
+      const msg = `Man… ninjas are kind of cool… I just don’t know any personally.`;
+      resController.error(res, 406, msg);
     }
   };
 }
@@ -50,14 +52,17 @@ function generateLink() {
               next();
             })
             .catch((err) => {
-              resController.error(err, res);
+              console.log(`[-] Error: ${err}`);
+              resController.error(res, 418);
             });
         })
         .catch((err) => {
-          resController.error(err, res);
+          console.log(`[-] Error: ${err}`);
+          resController.error(res, 418);
         });
     } catch (err) {
-      resController.error(err, res);
+      console.log(`[-] Error: ${err}`);
+      resController.error(res, 418);
     }
   }
 }
