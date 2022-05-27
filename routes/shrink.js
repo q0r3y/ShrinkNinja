@@ -7,11 +7,11 @@ const resController = require("../controllers/resController");
 router.post('/shrink',
   linkController.checkForWebUri(),
   linkController.generateLink(),
-  resController.sendShortLink()
+  resController.sendShortLink(),
 );
 
 router.all('*',
-  resController.sendWebPage()
+  resController.sendWebPage(),
 );
 
 module.exports = router;

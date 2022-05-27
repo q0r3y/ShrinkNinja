@@ -15,9 +15,9 @@ async function clearOldEntries() {
           console.log('[+] Worker.js: Cleared old entries');
           await database.disconnect();
         })
-        .catch(async function (error) {
+        .catch(async function (err) {
           console.log('[-] Worker.js: Error running scheduled task:');
-          console.log(error);
+          console.log(err);
           await database.disconnect();
         });
     })

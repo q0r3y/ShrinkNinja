@@ -10,7 +10,6 @@ async function unpackShortUrl(req, res) {
   const shortCode = reqData.slice(ninEnd, ninEnd + 5);
   const link = await getLink(escape(shortCode));
   if (link) {
-    console.log(link);
     res.json({
       'shortCode':link['shortCode'],
       'shortUrl':link['shortUrl'],
@@ -63,7 +62,8 @@ function generateLink() {
             });
         })
         .catch((err) => {
-          resController.error(res, 418, err);
+          console.log(`[-] Error: ${err}`);
+          resController.error(res, 409, err);
         });
     } catch (err) {
       console.log(`[-] Error: ${err}`);
