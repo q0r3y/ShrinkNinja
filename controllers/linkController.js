@@ -10,7 +10,13 @@ async function unpackShortUrl(req, res) {
   const shortCode = reqData.slice(ninEnd, ninEnd + 5);
   const link = await getLink(escape(shortCode));
   if (link) {
-    res.json({'longUrl':link['longUrl']});
+    console.log(link);
+    res.json({
+      'shortCode':link['shortCode'],
+      'shortUrl':link['shortUrl'],
+      'longUrl':link['longUrl'],
+      'creationDate':link['creationDate']
+    });
   } else {
     const msg = `The first priority to the ninja is to win without fighting.`;
     resController.error(res, 404, msg);

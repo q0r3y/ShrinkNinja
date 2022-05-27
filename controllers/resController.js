@@ -135,7 +135,7 @@ const webpage =
             headers: {'Accept': 'application/json','Content-Type': 'application/json'}
           });
           newShortLink.json().then((data) => {
-            $linkText.innerText = data.error || data.shortUrl || data.longUrl || msg;
+            $linkText.innerText = data.error || data.longUrl || data.shortUrl || msg;
           });
         } else {
           $linkText.innerText = msg;

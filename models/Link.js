@@ -6,13 +6,13 @@ const LinkSchema = mongoose.Schema({
     type: String,
     required: false,
   },
-  longUrl: {
-    type: String,
-    required: true
-  },
   shortUrl: {
     type: String,
     required: false
+  },
+  longUrl: {
+    type: String,
+    required: true
   },
   creationDate: {
     type: Date,
