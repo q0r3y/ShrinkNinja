@@ -57,8 +57,7 @@ function generateLink() {
             });
         })
         .catch((err) => {
-          console.log(`[-] Error: ${err}`);
-          resController.error(res, 418);
+          resController.error(res, 418, err);
         });
     } catch (err) {
       console.log(`[-] Error: ${err}`);
@@ -69,12 +68,16 @@ function generateLink() {
 
 async function generateShortCode() {
   let attempt = 1;
-  let shortCode = Math.random().toString(36).substr(2, 5);
+  let codeLength = 4;
+  let shortCode = Math.random().toString(36).substr(2, codeLength);
   while (await isCodeInUse(shortCode)) {
-    shortCode = Math.random().toString(36).substr(2, 5);
+    shortCode = Math.random().toString(36).substr(2, codeLength);
     attempt++;
-    if (attempt >= 10)
+    if (attempt % 10 === 0)
+      codeLength++;
+    if (attempt % 30 === 0)
       throw `It's not over when you lose, it's over when you give up`;
+    console.log(shortCode);
   }
   return shortCode;
 }
