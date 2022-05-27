@@ -5,7 +5,7 @@ const linkController = require('../controllers/linkController');
 const resController = require("../controllers/resController");
 
 router.post('/shrink',
-  linkController.checkForLongUrl(),
+  linkController.checkForWebUri(),
   linkController.generateLink(),
   resController.sendShortLink()
 );

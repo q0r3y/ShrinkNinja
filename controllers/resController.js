@@ -110,10 +110,10 @@ const webpage =
       }
       
       function setBackgroundColor() {
+        const $randomColor = getRandomColor();
         const $copyText = document.getElementById('copy');
         const $background = document.getElementById('background');
         const $githubSvg = document.getElementById('githubSvg');
-        const $randomColor = getRandomColor();
         $background.style.backgroundColor = $randomColor;
         $background.style.color = $randomColor;
         $copyText.style.color = $randomColor;
@@ -126,18 +126,19 @@ const webpage =
       
       async function requestCode() {
         const $linkText = document.getElementById('link');
-        const paramUrl = window.location.href.slice(window.location.origin.length+1);
-        if (paramUrl) {
-          const longUrlJson = JSON.stringify({ 'paramUrl' : paramUrl });
+        const inputData = window.location.href.slice(window.location.origin.length+1);
+        const msg = 'Man… ninjas are kind of cool… I just don’t know any personally.';
+        if (inputData) {
+          const longUrlJson = JSON.stringify({ 'shrinkUri' : inputData });
           const newShortLink = await fetch('/shrink', {
             method: 'POST', body: longUrlJson,
             headers: {'Accept': 'application/json','Content-Type': 'application/json'}
           });
           newShortLink.json().then((data) => {
-            $linkText.innerText = data.error || data.shortUrl || data.longUrl;
+            $linkText.innerText = data.error || data.shortUrl || data.longUrl || msg;
           });
         } else {
-          $linkText.innerText = 'Man… ninjas are kind of cool… I just don’t know any personally.';
+          $linkText.innerText = msg;
         }
       }
       

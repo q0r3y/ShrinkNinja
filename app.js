@@ -22,7 +22,7 @@ function initExpress() {
 
     const limiter = rateLimit({
         windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 50, // Number of requests
+        max: 50,                  // Number of requests
         message: {
             "msg" : "To lose patience is to lose the battle."
         },

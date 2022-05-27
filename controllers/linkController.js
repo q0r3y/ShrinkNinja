@@ -5,7 +5,7 @@ const validUrl = require('valid-url');
 const resController = require('./resController');
 
 async function unpackShortUrl(req, res) {
-  const reqData = req.body['paramUrl'];
+  const reqData = req.body['shrinkUri'];
   const ninEnd = reqData.indexOf(`nin.sh`) + 7;
   const shortCode = reqData.slice(ninEnd, ninEnd + 5);
   const link = await getLink(escape(shortCode));
@@ -17,9 +17,9 @@ async function unpackShortUrl(req, res) {
   }
 }
 
-function checkForLongUrl() {
+function checkForWebUri() {
   return async (req, res, next) => {
-    const reqData = req.body['paramUrl'];
+    const reqData = req.body['shrinkUri'];
     if (reqData.substring(0,14).includes(`nin.sh`)) {
       await unpackShortUrl(req, res);
     }
@@ -75,9 +75,8 @@ async function generateShortCode() {
     attempt++;
     if (attempt % 10 === 0)
       codeLength++;
-    if (attempt % 30 === 0)
+    if (attempt >= 30)
       throw `It's not over when you lose, it's over when you give up`;
-    console.log(shortCode);
   }
   return shortCode;
 }
@@ -91,4 +90,4 @@ async function getLink(shortCode) {
   return await Link.findOne({'shortCode': shortCode}).exec();
 }
 
-module.exports = {generateLink, getLink, checkForLongUrl};
+module.exports = {generateLink, getLink, checkForWebUri};
