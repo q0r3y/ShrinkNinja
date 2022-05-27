@@ -4,7 +4,7 @@ const router = express.Router();
 const linkController = require('../controllers/linkController');
 const resController = require("../controllers/resController");
 
-router.post('/shrink',
+router.post('/api',
   linkController.checkForWebUri(),
   linkController.generateLink(),
   resController.sendShortLink(),

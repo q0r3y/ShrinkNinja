@@ -130,7 +130,7 @@ const webpage =
         const msg = 'Man… ninjas are kind of cool… I just don’t know any personally.';
         if (inputData) {
           const longUrlJson = JSON.stringify({ 'shrinkUri' : inputData });
-          const newShortLink = await fetch('/shrink', {
+          const newShortLink = await fetch('/api', {
             method: 'POST', body: longUrlJson,
             headers: {'Accept': 'application/json','Content-Type': 'application/json'}
           });
