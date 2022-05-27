@@ -8,7 +8,7 @@ Usage:
 
 Place `shrink.ninja/` in front of any web URI. 
 
-A `nin.sh` link with 5 random characters is generated that redirects to your input URI.
+A `nin.sh` link with 4-6 random characters is generated that redirects to your input URI.
 
 If you have a `nin.sh` link, and you want to view the web URI that it redirects to,
 you can place the `nin.sh` link after `shrink.ninja/` and the shrink.ninja website will 
