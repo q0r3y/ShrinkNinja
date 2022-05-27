@@ -19,7 +19,7 @@ async function unpackShortUrl(req, res) {
 
 function checkForWebUri() {
   return async (req, res, next) => {
-    const reqData = req.body['shrinkUri'];
+    const reqData = req.body['shrinkUri'] || '';
     if (reqData.substring(0,14).includes(`nin.sh`)) {
       await unpackShortUrl(req, res);
     }
