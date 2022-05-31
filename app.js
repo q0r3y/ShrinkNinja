@@ -2,11 +2,11 @@
 require('dotenv').config();
 const vhost = require('vhost');
 const express = require("express");
-const database = require('./models/database');
+const {connect} = require('./models/database');
 const rateLimit = require('express-rate-limit');
 
 async function run() {
-    await database.connect();
+    await connect();
     initExpress();
 }
 
@@ -14,8 +14,8 @@ function initExpress() {
     const shrinkApp = express();
     const expandApp = express();
     const app = express();
-    const expandRoutes = require('./routes/expand');
-    const shrinkRoutes = require('./routes/shrink');
+    const expandRoutes = require('./routes/expandRoutes');
+    const shrinkRoutes = require('./routes/shrinkRoutes');
 
     shrinkApp.use('/', shrinkRoutes);
     expandApp.use('/', expandRoutes);
@@ -24,7 +24,7 @@ function initExpress() {
         windowMs: 15 * 60 * 1000, // 15 minutes
         max: 50,                  // Number of requests
         message: {
-            "msg" : "To lose patience is to lose the battle."
+            errors: [{"msg" : "To lose patience is to lose the battle."}],
         },
         standardHeaders: true,
         legacyHeaders: false,

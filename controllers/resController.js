@@ -1,18 +1,5 @@
 'use strict';
 
-const {validationResult} = require("express-validator");
-
-function checkForErrors() {
-  return async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({errors: errors.array()});
-    } else {
-      next();
-    }
-  }
-}
-
 function error(res, code, error) {
   res.status(code).json({
     status: 'error',
@@ -182,4 +169,4 @@ const webpage =
     </body>
   `
 
-module.exports = { error, sendWebPage, sendShortLink, checkForErrors}
+module.exports = {error, sendWebPage, sendShortLink}

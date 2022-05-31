@@ -2,7 +2,7 @@
 const Link = require("../models/Link");
 const database = require('../models/database');
 
-async function startWorker() {
+async function runWorker() {
   await clearOldEntries();
 }
 
@@ -27,4 +27,4 @@ async function clearOldEntries() {
     });
 }
 
-startWorker();
+runWorker();

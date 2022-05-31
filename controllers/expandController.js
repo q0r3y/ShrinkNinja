@@ -4,12 +4,11 @@ const resController = require("./resController");
 
 function checkForShortUrl() {
   return async (req, res, next) => {
-    console.log(req['body']);
     if (req.body['shrinkUri'].substring(0,14).includes(`nin.sh`)) {
       const reqData = req.body['shrinkUri'];
       const ninEnd = reqData.indexOf(`nin.sh`) + 7;
       const shortCode = reqData.slice(ninEnd, ninEnd + 5);
-      const link = await db.getLink(escape(shortCode));
+      const link = await expandLink(shortCode);
       if (link) {
         res.json({
           'shortCode':link['shortCode'],
