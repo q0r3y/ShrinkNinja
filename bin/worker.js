@@ -1,7 +1,8 @@
+'use strict';
 const Link = require("../models/Link");
 const database = require('../models/database');
 
-async function main() {
+async function startWorker() {
   await clearOldEntries();
 }
 
@@ -26,4 +27,4 @@ async function clearOldEntries() {
     });
 }
 
-main();
+startWorker();

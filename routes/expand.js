@@ -1,12 +1,12 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const linkController = require('../controllers/linkController');
+const expandController = require("../controllers/expandController");
 
 router.all('*',
   async (req, res) => {
     const shortCode = req.originalUrl.slice(1);
-    const link = await linkController.getLink(escape(shortCode));
+    let link = await expandController.expandLink(shortCode);
     if (link) {
       res.redirect(link['longUrl']);
     } else {

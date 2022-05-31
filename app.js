@@ -41,7 +41,7 @@ function initExpress() {
 
     app.use((error, req, res, next) => {
         if (error instanceof SyntaxError) {
-            return res.status(500).send({error: "Invalid JSON"});
+            return res.status(500).send({errors: [{"msg": "Invalid JSON"}]});
         } else {
             next();
         }

@@ -1,6 +1,7 @@
 'use strict';
 require('dotenv').config();
 const mongoose = require("mongoose");
+const Link = require("./Link");
 
 async function connect() {
   console.log(`[*] Connecting to mongoDB..`);
@@ -27,4 +28,25 @@ async function disconnect() {
     });
 }
 
-module.exports = {connect, disconnect}
+async function getLink(shortCode) {
+  return await Link.findOne({'shortCode': shortCode}).exec();
+}
+
+async function isCodeInUse(shortCode) {
+  const link = await getLink(shortCode);
+  return !!link;
+}
+
+function newLink(shortCode, longUrl) {
+  const SHORT_URL = 'nin.sh';
+  const TEN_DAYS = (10 * 86400000);
+  return new Link({
+    shortCode: shortCode,
+    longUrl: longUrl,
+    shortUrl: `${SHORT_URL}/${shortCode}`,
+    creationDate: Date.now(),
+    expirationDate: Date.now() + TEN_DAYS
+  });
+}
+
+module.exports = {connect, disconnect, getLink, isCodeInUse, newLink}
