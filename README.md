@@ -14,6 +14,10 @@ If you have a `nin.sh` link, and you want to view the web URI that it redirects 
 you can place the `nin.sh` link after `shrink.ninja/` and the 
 [shrink.ninja](https://shrink.ninja) website will display the web URI it was generated from.
 
+Bookmarklet: (Add a bookmark to your browser for one click shrink)
+
+`javascript:void(open('https://shrink.ninja/'+(window.location.href)));`
+
 Example:
 
  * Shrink:

@@ -2,11 +2,11 @@
 require('dotenv').config();
 const vhost = require('vhost');
 const express = require("express");
-const {connect} = require('./models/database');
+const dbConnect = require('./models/database').connect;
 const rateLimit = require('express-rate-limit');
 
 async function run() {
-    await connect();
+    await dbConnect();
     initExpress();
 }
 
