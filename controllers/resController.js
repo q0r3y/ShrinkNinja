@@ -23,8 +23,10 @@ function sendWebPage() {
 const webpage =
   `
     <!DOCTYPE html>
+    <html lang="en">
     <head>
     <title>ShrinkNinja</title>
+    <meta name="description" content="Simple Link Shortener">
     <meta name="viewport" content="width=device-width">
     </head>
     <style>
