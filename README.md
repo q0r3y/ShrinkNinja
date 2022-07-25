@@ -42,3 +42,8 @@ Api ( https://shrink.ninja/api/ )
    * Response: `{ "shortCode": "57v3", "shortUrl": "nin.sh/57v3",
                 "longUrl": "https://welovelongurls.com/...",
                 "creationDate": "2022-05-27T16:32:23.582Z" }`
+
+ 
+* Optional Shrink parameters:
+  * "singleUse" (boolean): Link is deleted from database after first use.
+    * `{ "shrinkUri" : "https://welovelongurls.com/...", "singleUse" : "true" }`

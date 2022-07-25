@@ -22,7 +22,13 @@ async function handleShortUrl(req, res) {
 }
 
 async function expandLink(shortCode) {
-  return await db.getLink(escape(shortCode));
+  const link = await db.getLink(escape(shortCode));
+  if (link) {
+    if (link['singleUse'] === true) {
+      await db.eraseLink(link['shortCode']);
+    }
+  }
+  return link;
 }
 
 module.exports = {handleShortUrl, expandLink}

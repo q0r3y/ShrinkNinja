@@ -50,4 +50,8 @@ function newLink(data) {
   });
 }
 
-module.exports = {connect, disconnect, getLink, isCodeInUse, newLink}
+async function eraseLink(shortCode) {
+  await Link.deleteOne({'shortCode': shortCode})
+}
+
+module.exports = {connect, disconnect, getLink, isCodeInUse, newLink, eraseLink}
