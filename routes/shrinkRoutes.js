@@ -4,7 +4,6 @@ const router = express.Router();
 const {body, validationResult} = require('express-validator');
 const shrinkController = require('../controllers/shrinkController');
 const resController = require("../controllers/resController");
-const expandController = require("../controllers/expandController");
 
 router.post('/api',
   body('shrinkUri')
@@ -13,7 +12,7 @@ router.post('/api',
     .notEmpty().withMessage(' must not be empty')
     .isURL().withMessage(' must be a valid URL'),
   checkForErrors(),
-  expandController.checkForShortUrl(),
+  shrinkController.handleParameters(),
   shrinkController.generateLink(),
   resController.sendShortLink(),
 );

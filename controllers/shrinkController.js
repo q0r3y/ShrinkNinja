@@ -1,6 +1,17 @@
 'use strict';
 const db = require('../models/database');
 const resController = require('./resController');
+const expandController = require('./expandController');
+
+function handleParameters() {
+  return async (req, res, next) => {
+    if (req.body['shrinkUri'].substring(0,14).includes(`nin.sh`)) {
+      await expandController.handleShortUrl(req, res);
+    } else {
+      next();
+    }
+  };
+}
 
 function generateLink() {
   return async (req, res, next) => {
@@ -39,4 +50,4 @@ async function generateShortCode() {
   return shortCode;
 }
 
-module.exports = {generateLink};
+module.exports = {generateLink, handleParameters};
