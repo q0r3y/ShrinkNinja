@@ -14,6 +14,10 @@ const LinkSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  singleUse: {
+    type: Boolean,
+    required: false
+  },
   creationDate: {
     type: Date,
     required: false

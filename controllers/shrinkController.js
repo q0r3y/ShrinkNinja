@@ -17,7 +17,12 @@ function generateLink() {
   return async (req, res, next) => {
     generateShortCode()
       .then((shortCode) => {
-        const newLink = db.newLink(shortCode, req.body['shrinkUri']);
+        const data = {
+          shortCode : shortCode,
+          longUrl: req.body['shrinkUri'],
+          singleUse: req.body['singleUse']
+        }
+        const newLink = db.newLink(data);
         newLink.save()
           .then(() => {
             res.locals['newLink'] = newLink;

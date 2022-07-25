@@ -37,13 +37,14 @@ async function isCodeInUse(shortCode) {
   return !!link;
 }
 
-function newLink(shortCode, longUrl) {
+function newLink(data) {
   const SHORT_URL = 'nin.sh';
   const TEN_DAYS = (10 * 86400000);
   return new Link({
-    shortCode: shortCode,
-    longUrl: longUrl,
-    shortUrl: `${SHORT_URL}/${shortCode}`,
+    shortCode: data.shortCode,
+    longUrl: data.longUrl,
+    shortUrl: `${SHORT_URL}/${data.shortCode}`,
+    singleUse: data.singleUse,
     creationDate: Date.now(),
     expirationDate: Date.now() + TEN_DAYS
   });

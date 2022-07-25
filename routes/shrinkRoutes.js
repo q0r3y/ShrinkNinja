@@ -11,6 +11,9 @@ router.post('/api',
     .withMessage(' must be present')
     .notEmpty().withMessage(' must not be empty')
     .isURL().withMessage(' must be a valid URL'),
+  body('singleUse')
+    .optional()
+    .isBoolean().withMessage(' must be a boolean value'),
   checkForErrors(),
   shrinkController.handleParameters(),
   shrinkController.generateLink(),

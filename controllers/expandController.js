@@ -12,6 +12,7 @@ async function handleShortUrl(req, res) {
       'shortCode':link['shortCode'],
       'shortUrl':link['shortUrl'],
       'longUrl':link['longUrl'],
+      'singleUse':link['singleUse'],
       'creationDate':link['creationDate']
     });
   } else {
