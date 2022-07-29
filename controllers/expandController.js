@@ -1,13 +1,22 @@
 'use strict';
 const db = require('../models/database');
 const resController = require("./resController");
-let sanitize = require('mongo-sanitize');
+const linkController = require("./linkController");
+const sanitize = require('mongo-sanitize');
+
+async function expandLink(shortCode) {
+  const link = await db.getLink(sanitize(shortCode));
+  if (link) {
+    await linkController.handleOptions(link);
+  }
+  return link;
+}
 
 async function handleShortUrl(req, res) {
   const reqData = req.body['shrinkUri'];
   const ninEnd = reqData.indexOf(`nin.sh`) + 7;
   const shortCode = reqData.slice(ninEnd, ninEnd + 5);
-  const link = await db.getLink(escape(shortCode));
+  const link = await db.getLink(sanitize(shortCode));
   if (link) {
     res.json({
       'shortCode':link['shortCode'],
@@ -20,16 +29,6 @@ async function handleShortUrl(req, res) {
     const msg = `The first priority to the ninja is to win without fighting.`;
     resController.error(res, 404, msg);
   }
-}
-
-async function expandLink(shortCode) {
-  const link = await db.getLink(sanitize(shortCode));
-  if (link) {
-    if (link['singleUse'] === true) {
-      await db.eraseLink(link['shortCode']);
-    }
-  }
-  return link;
 }
 
 module.exports = {handleShortUrl, expandLink}
