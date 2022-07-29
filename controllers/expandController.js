@@ -1,6 +1,7 @@
 'use strict';
 const db = require('../models/database');
 const resController = require("./resController");
+let sanitize = require('mongo-sanitize');
 
 async function handleShortUrl(req, res) {
   const reqData = req.body['shrinkUri'];
@@ -22,7 +23,7 @@ async function handleShortUrl(req, res) {
 }
 
 async function expandLink(shortCode) {
-  const link = await db.getLink(escape(shortCode));
+  const link = await db.getLink(sanitize(shortCode));
   if (link) {
     if (link['singleUse'] === true) {
       await db.eraseLink(link['shortCode']);
