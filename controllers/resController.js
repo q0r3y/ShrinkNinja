@@ -131,7 +131,7 @@ const webpage =
         const inputData = window.location.href.slice(window.location.origin.length+1);
         const msg = 'Man… ninjas are kind of cool… I just don’t know any personally.';
         if (inputData) {
-          const longUrlJson = JSON.stringify({ 'shrinkUri' : inputData });
+          const longUrlJson = JSON.stringify({ 'longUrl' : inputData });
           const newShortLink = await fetch('/api', {
             method: 'POST', body: longUrlJson,
             headers: {'Accept': 'application/json','Content-Type': 'application/json'}

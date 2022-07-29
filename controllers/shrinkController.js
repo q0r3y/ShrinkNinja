@@ -1,12 +1,26 @@
 'use strict';
 const db = require('../models/database');
 const resController = require('./resController');
-const expandController = require('./expandController');
 
-function handleParameters() {
+function handleNinLink() {
   return async (req, res, next) => {
-    if (req.body['shrinkUri'].substring(0,14).includes(`nin.sh`)) {
-      await expandController.handleShortUrl(req, res);
+    if (req.body['longUrl'].substring(0,14).includes(`nin.sh`)) {
+      const reqData = req.body['longUrl'];
+      const ninEnd = reqData.indexOf(`nin.sh`) + 7;
+      const shortCode = reqData.slice(ninEnd, ninEnd + 5);
+      const link = await db.getLink(shortCode);
+      if (link) {
+        res.json({
+          'shortCode':link['shortCode'],
+          'shortUrl':link['shortUrl'],
+          'longUrl':link['longUrl'],
+          'singleUse':link['singleUse'],
+          'creationDate':link['creationDate']
+        });
+      } else {
+        const msg = `The first priority to the ninja is to win without fighting.`;
+        resController.error(res, 404, msg);
+      }
     } else {
       next();
     }
@@ -17,12 +31,8 @@ function generateLink() {
   return async (req, res, next) => {
     generateShortCode()
       .then((shortCode) => {
-        const data = {
-          shortCode : shortCode,
-          longUrl: req.body['shrinkUri'],
-          singleUse: req.body['singleUse']
-        }
-        const newLink = db.newLink(data);
+        req.body.shortCode = shortCode;
+        const newLink = db.newLink(req.body);
         newLink.save()
           .then(() => {
             res.locals['newLink'] = newLink;
@@ -42,7 +52,7 @@ function generateLink() {
 
 async function generateShortCode() {
   let attempt = 1;
-  let codeLength = 4;
+  let codeLength = 5;
   let shortCode = Math.random().toString(36).substr(2, codeLength);
   while (await db.isCodeInUse(shortCode)) {
     shortCode = Math.random().toString(36).substr(2, codeLength);
@@ -55,4 +65,4 @@ async function generateShortCode() {
   return shortCode;
 }
 
-module.exports = {generateLink, handleParameters};
+module.exports = {generateLink, handleNinLink};

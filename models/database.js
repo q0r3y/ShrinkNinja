@@ -2,6 +2,7 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
 const Link = require("./Link");
+const sanitize = require('mongo-sanitize');
 
 async function connect() {
   console.log(`[*] Connecting to mongoDB..`);
@@ -28,30 +29,35 @@ async function disconnect() {
     });
 }
 
-async function getLink(shortCode) {
-  return await Link.findOne({'shortCode': shortCode}).exec();
-}
-
 async function isCodeInUse(shortCode) {
   const link = await getLink(shortCode);
   return !!link;
 }
 
+async function getLink(shortCode) {
+  const cleanShortCode = sanitize(shortCode);
+  return await Link.findOne({'shortCode': cleanShortCode}).exec();
+}
+
 function newLink(data) {
   const SHORT_URL = 'nin.sh';
   const TEN_DAYS = (10 * 86400000);
+  Object.keys(data).forEach(k => {
+    data[k] = sanitize(data[k]);
+  });
   return new Link({
     shortCode: data.shortCode,
     longUrl: data.longUrl,
     shortUrl: `${SHORT_URL}/${data.shortCode}`,
-    singleUse: data.singleUse,
+    singleUse: data.singleUse || false,
     creationDate: Date.now(),
     expirationDate: Date.now() + TEN_DAYS
   });
 }
 
 async function eraseLink(shortCode) {
-  await Link.deleteOne({'shortCode': shortCode})
+  const cleanShortCode = sanitize(shortCode);
+  await Link.deleteOne({'shortCode': cleanShortCode})
 }
 
 module.exports = {connect, disconnect, getLink, isCodeInUse, newLink, eraseLink}

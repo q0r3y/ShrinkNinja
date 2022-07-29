@@ -8,7 +8,7 @@ Usage:
 
 Place `shrink.ninja/` in front of any web URI. 
 
-A `nin.sh` link with 4-6 random characters is generated that redirects to your input URI.
+A `nin.sh` link with 5-7 random characters is generated that redirects to your input URI.
 
 If you have a `nin.sh` link, and you want to view the web URI that it redirects to,
 you can place the `nin.sh` link after `shrink.ninja/` and the 
@@ -33,12 +33,12 @@ Example:
 Api ( https://shrink.ninja/api/ )
 
  * Shrink:
-   * Post:      `{ "shrinkUri" : "https://welovelongurls.com/..." }`
+   * Post:      `{ "longUrl" : "https://welovelongurls.com/..." }`
    * Response:  `{ "shortUrl": "nin.sh/57v3" }`
 
 
  * Expand:
-   * Post: `{ "shrinkUri" : "nin.sh/57v3" }`
+   * Post: `{ "longUrl" : "nin.sh/57v3" }`
    * Response: `{ "shortCode": "57v3", "shortUrl": "nin.sh/57v3",
                 "longUrl": "https://welovelongurls.com/...",
                 "creationDate": "2022-05-27T16:32:23.582Z" }`
@@ -46,4 +46,4 @@ Api ( https://shrink.ninja/api/ )
  
 * Optional Shrink parameters:
   * "singleUse" (boolean): Link is deleted from database after first use.
-    * `{ "shrinkUri" : "https://welovelongurls.com/...", "singleUse" : "true" }`
+    * `{ "longUrl" : "https://welovelongurls.com/...", "singleUse" : "true" }`

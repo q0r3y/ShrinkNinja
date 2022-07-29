@@ -1,10 +1,10 @@
 'use strict';
 const db = require('../models/database');
 
-async function handleOptions(link) {
+async function triggered(link) {
   if (link['singleUse'] === true) {
     await db.eraseLink(link['shortCode']);
   }
 }
 
-module.exports = {handleOptions}
+module.exports = {triggered}

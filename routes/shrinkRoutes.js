@@ -6,7 +6,7 @@ const shrinkController = require('../controllers/shrinkController');
 const resController = require("../controllers/resController");
 
 router.post('/api',
-  body('shrinkUri')
+  body('longUrl')
     .exists({checkFalsy: true, checkNull: true,})
     .withMessage(' must be present')
     .notEmpty().withMessage(' must not be empty')
@@ -15,7 +15,7 @@ router.post('/api',
     .optional()
     .isBoolean().withMessage(' must be a boolean value'),
   checkForErrors(),
-  shrinkController.handleParameters(),
+  shrinkController.handleNinLink(),
   shrinkController.generateLink(),
   resController.sendShortLink(),
 );

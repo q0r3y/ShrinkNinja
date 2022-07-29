@@ -14,7 +14,7 @@ function initExpress() {
     const shrinkApp = express();
     const expandApp = express();
     const app = express();
-    const expandRoutes = require('./routes/expandRoutes');
+    const expandRoutes = require('./routes/ninRoutes');
     const shrinkRoutes = require('./routes/shrinkRoutes');
 
     shrinkApp.use('/', shrinkRoutes);
@@ -31,7 +31,7 @@ function initExpress() {
     });
 
     // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
-    app.set('trust proxy', 2)
+    app.set('trust proxy', 2);
     app.use(limiter);
 
     app.use(express.json());
