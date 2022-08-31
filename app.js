@@ -4,6 +4,7 @@ const vhost = require('vhost');
 const express = require("express");
 const dbConnect = require('./models/database').connect;
 const rateLimit = require('express-rate-limit');
+const cors = require("cors");
 
 async function run() {
     await dbConnect();
@@ -35,6 +36,10 @@ function initExpress() {
     app.use(limiter);
 
     app.use(express.json());
+
+    app.use(cors({
+        origin: '*'
+    }));
 
     app.use(vhost('nin.sh', expandApp));
     app.use(vhost('shrink.ninja', shrinkApp));
