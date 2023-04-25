@@ -54,8 +54,22 @@ function initExpress() {
   });
 
   app.listen(process.env.PORT || 3000, () => {
-    console.log(`[*] Listening on ${process.env.PORT || 3000}`);
+    console.log(`[*] HTTP Listening on ${process.env.PORT || 3000}`);
   });
+
+  if (process.env.NODE_ENV === 'development') {
+    const https = require('https');
+    const fs = require('fs');
+
+    const options = {
+      key: fs.readFileSync('./secrets/key.pem'),
+      cert: fs.readFileSync('./secrets/cert.pem'),
+    };
+
+    https.createServer(options, app).listen(443, () => {
+      console.log(`[*] HTTPS Listening on 443`);
+    });
+  }
 }
 
 run();
