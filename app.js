@@ -35,6 +35,7 @@ function initExpress() {
   app.use(limiter);
 
   app.use(express.json());
+  app.set('view engine', 'ejs');
 
   app.use(
     cors({

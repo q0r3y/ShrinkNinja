@@ -1,0 +1,69 @@
+<style>
+  body {
+    font-family: monospace;
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+  }
+  #copy {
+    color:black;
+    text-align:center;
+    font-size:2em;
+    margin:0 0 0.5em 0;
+  }
+  #link {
+    font-size:3em;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+    filter: invert(100%);
+    text-align:center;
+    word-break:break-all;
+    max-width:80%;
+    margin: 0.5em;
+  }
+  footer {
+    position: fixed;
+    bottom: 1em;
+    gap: 1em;
+    display: flex;
+    flex-direction: row;
+  }
+  svg {
+    filter: invert(100%);
+    height: 4em;
+    width: 4em;
+  }
+  .hyperlink:active {
+    transform:translateY(4px);
+  }
+  .a {
+    animation:fadeOut ease 2s;
+    animation-fill-mode:forwards;
+  }
+  @keyframes fadeOut {
+    0% {
+      opacity:1;
+    }
+    100% {
+      opacity:0;
+    }
+  }
+  @media only screen and (max-width: 1180px) {
+    #copy {
+      margin:0 0 2.5em 0;
+    }
+    svg {
+      height: 3em;
+      width: 3em;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    #link {
+      font-size: 4em;
+    }
+  }
+</style>
