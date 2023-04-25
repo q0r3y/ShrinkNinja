@@ -3,25 +3,24 @@
 function error(res, code, error) {
   res.status(code).json({
     status: 'error',
-    error: error || `Only a ninja can stop a ninja.`
+    error: error || `Only a ninja can stop a ninja.`,
   });
 }
 
 function sendShortLink() {
   return (req, res) => {
     const short = res.locals['newLink']['shortUrl'];
-    res.json({'shortUrl' : short});
-  }
+    res.json({ shortUrl: short });
+  };
 }
 
 function sendWebPage() {
   return (req, res) => {
     res.send(webpage);
-  }
+  };
 }
 
-const webpage =
-  `
+const webpage = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -169,6 +168,6 @@ const webpage =
         \t</g></g>
       </svg>
     </body>
-  `
+  `;
 
-module.exports = {error, sendWebPage, sendShortLink}
+module.exports = { error, sendWebPage, sendShortLink };

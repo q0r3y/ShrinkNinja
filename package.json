@@ -4,8 +4,8 @@
   "description": "A simple web URI link shortener created with node.js.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "NODE_ENV='production' node app.js",
+    "dev": "NODE_ENV='development' nodemon app.js"
   },
   "author": "q0r3y",
   "license": "ISC",
@@ -17,8 +17,10 @@
     "express-validator": "^6.14.1",
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.13.5",
-    "nodemon": "^2.0.16",
     "valid-url": "^1.0.9",
     "vhost": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
