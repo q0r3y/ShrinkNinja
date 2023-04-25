@@ -37,12 +37,23 @@
     height: 4em;
     width: 4em;
   }
+  #shurikenSvg:not(:active) {
+    animation: rotate 1s;
+  }
   .hyperlink:active {
     transform:translateY(4px);
   }
   .a {
     animation:fadeOut ease 2s;
     animation-fill-mode:forwards;
+  }
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
   @keyframes fadeOut {
     0% {
