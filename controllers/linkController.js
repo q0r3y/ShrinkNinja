@@ -7,4 +7,4 @@ async function triggered(link) {
   }
 }
 
-module.exports = {triggered}
+module.exports = { triggered };

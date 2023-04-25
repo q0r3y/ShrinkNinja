@@ -8,24 +8,24 @@ const LinkSchema = mongoose.Schema({
   },
   shortUrl: {
     type: String,
-    required: false
+    required: false,
   },
   longUrl: {
     type: String,
-    required: true
+    required: true,
   },
   singleUse: {
     type: Boolean,
-    required: false
+    required: false,
   },
   creationDate: {
     type: Date,
-    required: false
+    required: false,
   },
   expirationDate: {
     type: Date,
-    required: false
-  }
+    required: false,
+  },
 });
 
 module.exports = mongoose.model('Links', LinkSchema);
