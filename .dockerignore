@@ -1,5 +1,6 @@
 .gitignore
 .dockerignore
+.env
 secrets
 node_modules
 Dockerfile
