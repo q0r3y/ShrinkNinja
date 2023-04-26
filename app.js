@@ -20,21 +20,23 @@ function initExpress() {
   shrinkApp.use('/', shrinkRoutes);
   expandApp.use('/', expandRoutes);
 
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 50, // Number of requests
-    message: {
-      errors: [{ msg: 'To lose patience is to lose the battle.' }],
-    },
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-
-  // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
-  app.set('trust proxy', 2);
-  app.use(limiter);
+  if (process.env.NODE_ENV === 'production') {
+    const limiter = rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 50, // Number of requests
+      message: {
+        errors: [{ msg: 'To lose patience is to lose the battle.' }],
+      },
+      standardHeaders: true,
+      legacyHeaders: false,
+    });
+    // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
+    app.set('trust proxy', 2);
+    app.use(limiter);
+  }
 
   app.use(express.json());
+  app.set('view engine', 'ejs');
 
   app.use(
     cors({
@@ -54,8 +56,22 @@ function initExpress() {
   });
 
   app.listen(process.env.PORT || 3000, () => {
-    console.log(`[*] Listening on ${process.env.PORT || 3000}`);
+    console.log(`[*] HTTP Listening on ${process.env.PORT || 3000}`);
   });
+
+  if (process.env.NODE_ENV === 'development') {
+    const https = require('https');
+    const fs = require('fs');
+
+    const options = {
+      key: fs.readFileSync('./secrets/key.pem'),
+      cert: fs.readFileSync('./secrets/cert.pem'),
+    };
+
+    https.createServer(options, app).listen(443, () => {
+      console.log(`[*] HTTPS Listening on 443`);
+    });
+  }
 }
 
 run();
