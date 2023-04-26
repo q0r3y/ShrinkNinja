@@ -48,11 +48,11 @@
 
     async function requestCode() {
       const $linkText = document.getElementById('link');
+      const $copyText = document.getElementById('copy');
+      const $instText = document.getElementById('instructions');
       const inputData = window.location.href.slice(
         window.location.origin.length + 1
       );
-      const msg =
-        'Man… ninjas are kind of cool… I just don’t know any personally.';
       if (inputData) {
         const longUrlJson = JSON.stringify({ longUrl: inputData });
         const newShortLink = await fetch('/api', {
@@ -64,15 +64,27 @@
           },
         });
         newShortLink.json().then((data) => {
-          $linkText.innerText =
-            data.error || data.longUrl || data.shortUrl || msg;
+          if (!data.errors) {
+            $instText.style.display = 'none';
+            $copyText.style.display = 'block';
+            $linkText.innerText = data.longUrl || data.shortUrl;
+            $linkText.style.display = 'block';
+          } else {
+            $instText.style.display = 'block';
+          }
         });
       } else {
-        $linkText.innerText = msg;
+        $instText.style.display = 'block';
       }
     }
   </script>
   <body onload="setBackgroundColor(); requestCode();" id="background">
+    <ol id="instructions">
+      <li>Type "shrink.ninja/" in front of the URL you want to shorten.</li>
+      <li>Press Enter.</li>
+      <li>Copy the shortened URL from the shrink.ninja website.</li>
+      <li>Paste the shortened URL wherever you want to use it.</li>
+    </ol>
     <p id="link" onclick="copy(this)" class="hyperlink"></p>
     <p id="copy">Copied</p>
     <footer>

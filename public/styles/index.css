@@ -9,12 +9,14 @@
     flex-direction: column;
   }
   #copy {
+    display: none;
     color:black;
     text-align:center;
     font-size:2em;
     margin:0 0 0.5em 0;
   }
   #link {
+    display: none;
     font-size:3em;
     overflow: scroll;
     overflow-x: hidden;
@@ -25,9 +27,15 @@
     max-width:80%;
     margin: 0.5em;
   }
+  #instructions {
+    display: none;
+    font-size: 2em;
+    filter: invert(100%);
+    max-width:80%;
+  }
   footer {
     position: fixed;
-    bottom: 1em;
+    bottom: 2em;
     gap: 1em;
     display: flex;
     flex-direction: row;
@@ -64,12 +72,18 @@
     }
   }
   @media only screen and (max-width: 1180px) {
+    #instructions {
+      font-size: 1.5em;  
+    }
     #copy {
       margin:0 0 2.5em 0;
     }
     svg {
       height: 3em;
       width: 3em;
+    }
+    footer {
+      bottom: 1em;
     }
   }
   @media only screen and (max-width: 600px) {

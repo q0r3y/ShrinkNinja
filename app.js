@@ -20,19 +20,20 @@ function initExpress() {
   shrinkApp.use('/', shrinkRoutes);
   expandApp.use('/', expandRoutes);
 
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 50, // Number of requests
-    message: {
-      errors: [{ msg: 'To lose patience is to lose the battle.' }],
-    },
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-
-  // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
-  app.set('trust proxy', 2);
-  app.use(limiter);
+  if (process.env.NODE_ENV === 'production') {
+    const limiter = rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 50, // Number of requests
+      message: {
+        errors: [{ msg: 'To lose patience is to lose the battle.' }],
+      },
+      standardHeaders: true,
+      legacyHeaders: false,
+    });
+    // 2 Proxies (Cloudflare, Heroku). Needed for rate-limiting the correct IP
+    app.set('trust proxy', 2);
+    app.use(limiter);
+  }
 
   app.use(express.json());
   app.set('view engine', 'ejs');
