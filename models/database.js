@@ -8,7 +8,7 @@ async function connect() {
   console.log(`[*] Connecting to mongoDB..`);
   //mongoose.set('debug', true);
   await mongoose
-    .connect(MONGO_DB_CONNECTION, {
+    .connect(process.env.MONGO_DB_CONNECTION, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
