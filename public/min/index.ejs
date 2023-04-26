@@ -12,14 +12,16 @@
   <script>
     <%- include ("./scripts/index.min.js") %>
   </script>
-  <body onload="setBackgroundColor(); requestCode();" id="background">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <body onload="setColors(); requestCode();" id="background">
     <ol id="instructions">
       <li>Type "shrink.ninja/" in front of the URL you want to shorten.</li>
       <li>Press Enter.</li>
       <li>Copy the shortened URL from the shrink.ninja website.</li>
       <li>Paste the shortened URL wherever you want to use it.</li>
     </ol>
-    <p id="link" onclick="copy(this)" class="hyperlink"></p>
+    <canvas id="qrcode" class="hyperlink" onclick="copyLink()"></canvas>
+    <p id="link" onclick="copyLink()" class="hyperlink"></p>
     <p id="copy">Copied</p>
     <footer>
       <%- include ("../images/gh.svg") %><%- include ("../images/shuriken.svg")
