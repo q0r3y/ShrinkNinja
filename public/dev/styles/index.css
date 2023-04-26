@@ -26,6 +26,10 @@ body {
   max-width: 80%;
   margin: 0.5em;
 }
+#qrcode {
+  display: none;
+  filter: invert(100%);
+}
 #instructions {
   display: none;
   font-size: 2em;
