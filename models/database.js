@@ -5,10 +5,16 @@ const Link = require('./Link');
 const sanitize = require('mongo-sanitize');
 
 async function connect() {
+  let DB_CONNECTION = '';
+  if (process.env.NODE_ENV === 'production') {
+    DB_CONNECTION = process.env.PROD_DB_CONNECTION;
+  } else {
+    DB_CONNECTION = process.env.DEV_DB_CONNECTION;
+  }
   console.log(`[*] Connecting to mongoDB..`);
   //mongoose.set('debug', true);
   await mongoose
-    .connect(process.env.MONGO_DB_CONNECTION, {
+    .connect(DB_CONNECTION, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

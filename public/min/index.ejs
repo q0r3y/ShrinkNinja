@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ShrinkNinja</title>
+    <%- include ("../images/favicon.ejs") %>
+    <meta name="description" content="Simple Link Shortener" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <style>
+    <%- include ("./styles/index.min.css") %>
+  </style>
+  <script>
+    <%- include ("./scripts/index.min.js") %>
+  </script>
+  <body onload="setBackgroundColor(); requestCode();" id="background">
+    <ol id="instructions">
+      <li>Type "shrink.ninja/" in front of the URL you want to shorten.</li>
+      <li>Press Enter.</li>
+      <li>Copy the shortened URL from the shrink.ninja website.</li>
+      <li>Paste the shortened URL wherever you want to use it.</li>
+    </ol>
+    <p id="link" onclick="copy(this)" class="hyperlink"></p>
+    <p id="copy">Copied</p>
+    <footer>
+      <%- include ("../images/gh.svg") %><%- include ("../images/shuriken.svg")
+      %>
+    </footer>
+  </body>
+</html>

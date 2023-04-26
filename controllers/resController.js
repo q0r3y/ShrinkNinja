@@ -16,7 +16,11 @@ function sendShortLink() {
 
 function sendWebPage() {
   return (req, res) => {
-    res.render('../public/index.ejs');
+    if (process.env.NODE_ENV === 'production') {
+      res.render('../public/min/index.ejs');
+    } else {
+      res.render('../public/dev/index.ejs');
+    }
   };
 }
 
