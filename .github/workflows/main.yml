@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/shrinkninja
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/shrinkninja --build-arg DOCKER_ENV=production --build-arg DOCKER_STAGE=production
 
       - name: Docker Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/shrinkninja
