@@ -1,8 +1,13 @@
 FROM node:18-alpine
 
+ARG DOCKER_ENV
+ARG DOCKER_STAGE
+ENV NODE_ENV=${DOCKER_ENV}
+ENV DEPLOY_STAGE=${DOCKER_STAGE}
+
 WORKDIR /app
 COPY . .
 
-RUN npm install --production
+RUN npm install
 
 CMD ["npm", "start"]
