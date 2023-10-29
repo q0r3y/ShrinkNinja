@@ -1,5 +1,7 @@
 ### [Shrink Ninja](https://shrink.ninja) ###
 
+Archived: I'm no longer using this version of ShrinkNinja and I've moved the project to a serverless architecture for simplicity.
+
 A simple web URI link shortener created with node.js.
 
 By default, links are erased from the database after 10 days.
